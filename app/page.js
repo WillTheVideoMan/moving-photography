@@ -9,8 +9,7 @@ export default function Home() {
           className={styles.logo}
           src="/moving-photography.png"
           alt="Moving Photograpy Logo"
-          width={390}
-          height={53}
+          fill
           priority
         />
       </div>

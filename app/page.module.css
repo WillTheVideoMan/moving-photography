@@ -78,6 +78,7 @@
   align-items: center;
   position: relative;
   padding: 4rem 0;
+  min-width: 95vw;
 }
 .center::before,
 .center::after {
@@ -90,6 +91,21 @@
 
 .logo {
   position: relative;
+  padding: 2rem;
+  object-fit: contain;
+  animation-name: skewdance;
+  animation-duration: 60s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes skewdance {
+  from {
+    transform: skewX(0deg);
+  }
+  to {
+    transform: skewX(360deg);
+  }
 }
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
