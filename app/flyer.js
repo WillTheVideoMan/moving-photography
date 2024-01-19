@@ -1,43 +1,40 @@
 "use client";
 
 import styles from "./page.module.css";
-import { useAnimate, useInView } from "framer-motion";
-import { useEffect, useRef } from "react";
-import Image from "next/image";
+import { useAnimation, motion } from "framer-motion";
+import { useEffect } from "react";
 
 const Flyer = ({ id, duration, onComplete, xoff, delay, height }) => {
-  const [scope, animate] = useAnimate();
-  const isInView = useInView(scope, {
-    margin: `${height - 1}px 0px 0px 0px`,
-  });
-  const animation = useRef(null);
-  const renderCounter = useRef(0);
+  const controls = useAnimation();
 
   useEffect(() => {
-    animation.current = animate(
-      scope.current,
-      { top: `calc(0vh - ${height * 2}px)` },
-      { duration: duration, ease: "linear", delay: delay }
-    );
-  });
-
-  useEffect(() => {
-    renderCounter.current++;
-    if (!isInView && renderCounter.current >= 4) onComplete(id);
-  }, [isInView, onComplete, id]);
+    controls.start({
+      top: -500,
+      transition: { duration: duration, delay: delay },
+    });
+  }, []);
 
   return (
-    <Image
-      ref={scope}
+    <motion.img
       className={styles.flying_image}
       src="/portfolio/050124-NETD-SPECIALS-0.jpg"
       alt="Moving Photograpy Logo"
-      width={height / 0.66}
-      height={height}
       style={{
         top: `calc(100vh + 0px)`,
         right: `calc(${xoff}vw - ${height / 0.66 / 2}px)`,
+        width: height / 0.66,
+        height: height,
       }}
+      onMouseEnter={() => {
+        controls.stop();
+      }}
+      onMouseLeave={() => {
+        controls.start({
+          top: -500,
+          transition: { duration: duration },
+        });
+      }}
+      animate={controls}
     />
   );
 };
